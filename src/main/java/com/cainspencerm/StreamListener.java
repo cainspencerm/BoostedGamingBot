@@ -14,8 +14,12 @@ public class StreamListener extends ListenerAdapter {
     public void onUserActivityStart(@NotNull UserActivityStartEvent event) {
         // Check the integrity of the boosted server guild and streaming role.
         if (Bot.boostedServer == null || Bot.currentlyStreaming == null) {
-            Bot.boostedServer = event.getGuild();
-            Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
+            try {
+                Bot.boostedServer = event.getGuild();
+                Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         // Ignore bot events.
@@ -33,8 +37,12 @@ public class StreamListener extends ListenerAdapter {
     public void onUserActivityEnd(@NotNull UserActivityEndEvent event) {
         // Check the integrity of the boosted server guild and streaming role.
         if (Bot.boostedServer == null || Bot.currentlyStreaming == null) {
-            Bot.boostedServer = event.getGuild();
-            Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
+            try {
+                Bot.boostedServer = event.getGuild();
+                Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         // Ignore bot events.
@@ -52,8 +60,12 @@ public class StreamListener extends ListenerAdapter {
     public void onUserUpdateOnlineStatus(@NotNull UserUpdateOnlineStatusEvent event) {
         // Check the integrity of the boosted server guild and streaming role.
         if (Bot.boostedServer == null || Bot.currentlyStreaming == null) {
-            Bot.boostedServer = event.getGuild();
-            Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
+            try {
+                Bot.boostedServer = event.getGuild();
+                Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         // Ignore bot events.
@@ -67,7 +79,7 @@ public class StreamListener extends ListenerAdapter {
 
             try {
                 event.getMember().getRoles().remove(Bot.currentlyStreaming);
-            } catch (Exception ignored) { }
+            } catch (Exception e) { e.printStackTrace(); }
         }
     }
 
