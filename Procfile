@@ -1,1 +1,1 @@
-web: java --server.port=$PORT -jar out/artifacts/boosted_jar/untitled.jar
+web: java -Dserver.port=$PORT -jar out/artifacts/boosted_jar/untitled.jar
