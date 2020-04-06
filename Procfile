@@ -1,1 +1,1 @@
-web: java -jar /out/artifacts/boosted_jar/untitled.jar
+web: java -jar out/artifacts/boosted_jar/untitled.jar
