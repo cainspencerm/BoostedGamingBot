@@ -77,9 +77,11 @@ public class StreamListener extends ListenerAdapter {
                 event.getNewOnlineStatus() == OnlineStatus.DO_NOT_DISTURB ||
                 event.getNewOnlineStatus() == OnlineStatus.INVISIBLE) {
 
-            try {
-                event.getMember().getRoles().remove(Bot.currentlyStreaming);
-            } catch (Exception e) { e.printStackTrace(); }
+            if (event.getMember().getRoles().contains(Bot.currentlyStreaming)) {
+                try {
+                    event.getMember().getRoles().remove(Bot.currentlyStreaming);
+                } catch (Exception e) { e.printStackTrace(); }
+            }
         }
     }
 
