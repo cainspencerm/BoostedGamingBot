@@ -12,6 +12,7 @@ import javax.security.auth.login.LoginException;
 public class Bot {
     static Role currentlyStreaming;
     static Guild boostedServer;
+    static String delimiter = "!";
 
     public static void main(String[] args) {
         recursiveJDA(null);
@@ -33,6 +34,7 @@ public class Bot {
                             GatewayIntent.DIRECT_MESSAGE_TYPING
                     ).setToken("Njk2MTM1MjE1OTkwNTcxMDY4.XokUhg.lFEXy-A8SohgzlSWlTL2O8m3fCc").setActivity(Activity.of(Activity.ActivityType.DEFAULT, "Are you streaming for Boosted?")).build();
             jda.addEventListener(new StreamListener());
+            jda.addEventListener(new RoleSetter());
         } catch (LoginException e) {
             recursiveJDA(jda);
         }
