@@ -12,7 +12,7 @@ import javax.security.auth.login.LoginException;
 public class Bot {
     static Role currentlyStreaming;
     static Guild boostedServer;
-    static String delimiter = "!";
+    static String delimiter = "?";
 
     public static void main(String[] args) {
         recursiveJDA(null);

@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import javax.annotation.Nonnull;
 
 
+import java.util.Objects;
+
 import static com.cainspencerm.Bot.boostedServer;
 import static com.cainspencerm.Bot.delimiter;
 
@@ -28,7 +30,8 @@ public class RoleSetter extends ListenerAdapter {
         if (event.getMessage().getContentRaw().contains(delimiter + "add")) {
             if (event.getMessage().getContentRaw().contains("rl")) {
                 try {
-                    boostedServer.addRoleToMember(event.getMember(), boostedServer.getRolesByName("Boosted Rocket League", false).get(0)).queue();
+                    boostedServer.addRoleToMember(Objects.requireNonNull(event.getMember()), boostedServer.getRolesByName("Boosted Rocket League", false).get(0)).queue();
+                    event.getChannel().sendMessage("Added Boosted Rocket League role to <@" + event.getAuthor().getId() + ">!").queue();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -39,7 +42,8 @@ public class RoleSetter extends ListenerAdapter {
         if (event.getMessage().getContentRaw().contains(delimiter + "remove")) {
             if (event.getMessage().getContentRaw().contains("rl")) {
                 try {
-                    boostedServer.removeRoleFromMember(event.getMember(), boostedServer.getRolesByName("Boosted Rocket League", false).get(0)).queue();
+                    boostedServer.removeRoleFromMember(Objects.requireNonNull(event.getMember()), boostedServer.getRolesByName("Boosted Rocket League", false).get(0)).queue();
+                    event.getChannel().sendMessage("Removed Boosted Rocket League from to <@" + event.getAuthor().getId() + ">!").queue();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
