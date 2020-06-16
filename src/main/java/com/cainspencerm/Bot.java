@@ -13,14 +13,15 @@ public class Bot {
     static Role currentlyStreaming;
     static Guild boostedServer;
     static String delimiter = "?";
+    static JDA JDA;
 
     public static void main(String[] args) {
-        recursiveJDA(null);
+        recursiveJDA();
     }
 
-    private static void recursiveJDA(JDA jda) {
+    private static void recursiveJDA() {
         try {
-            jda = JDABuilder
+            JDA = JDABuilder
                     .create(
                             GatewayIntent.GUILD_MEMBERS,
                             GatewayIntent.GUILD_VOICE_STATES,
@@ -33,10 +34,10 @@ public class Bot {
                             GatewayIntent.DIRECT_MESSAGE_REACTIONS,
                             GatewayIntent.DIRECT_MESSAGE_TYPING
                     ).setToken("Njk2MTM1MjE1OTkwNTcxMDY4.XokUhg.lFEXy-A8SohgzlSWlTL2O8m3fCc").setActivity(Activity.of(Activity.ActivityType.DEFAULT, "Are you streaming for Boosted?")).build();
-            jda.addEventListener(new StreamListener());
-            jda.addEventListener(new RoleSetter());
+            JDA.addEventListener(new StreamListener());
+            JDA.addEventListener(new SuggestionListener());
         } catch (LoginException e) {
-            recursiveJDA(jda);
+            recursiveJDA();
         }
     }
 }
