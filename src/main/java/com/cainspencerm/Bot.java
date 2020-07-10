@@ -12,6 +12,7 @@ import javax.security.auth.login.LoginException;
 public class Bot {
     static Role currentlyStreaming;
     static Guild boostedServer;
+    static String gameReactionMessageId;
     static String delimiter = "?";
 
     public static void main(String[] args) {
@@ -19,6 +20,23 @@ public class Bot {
     }
 
     private static void recursiveJDA(JDA jda) {
+        // Open guild file.
+        Properties prop = new Properties();
+        String fileName = "Guild.conf";
+        InputStream is = null;
+
+        try {
+            is = new FileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find file.");
+        }
+
+        try {
+            prop.load(is);
+        } catch (IOException e) {
+            System.err.println("Could not load properties.");
+        }
+        
         try {
             jda = JDABuilder
                     .create(
@@ -38,5 +56,12 @@ public class Bot {
         } catch (LoginException e) {
             recursiveJDA(jda);
         }
+        
+        boostedServer = jda.getGuildById(prop.getProperty("boostedGuildId"));
+
+        assert boostedServer != null;
+        currentlyStreaming = boostedServer.getRolesByName("Currently Streaming", false).get(0);
+
+        gameReactionMessageId = prop.getProperty("gameReactionMessageId");
     }
 }
