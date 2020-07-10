@@ -8,11 +8,17 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class Bot {
     static Role currentlyStreaming;
     static Guild boostedServer;
     static String gameReactionMessageId;
+    static Properties prop;
     static String delimiter = "?";
 
     public static void main(String[] args) {
@@ -21,7 +27,7 @@ public class Bot {
 
     private static void recursiveJDA(JDA jda) {
         // Open guild file.
-        Properties prop = new Properties();
+        prop = new Properties();
         String fileName = "Guild.conf";
         InputStream is = null;
 
