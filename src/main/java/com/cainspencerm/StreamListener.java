@@ -16,6 +16,7 @@ public class StreamListener extends ListenerAdapter {
         if (Bot.boostedServer == null || Bot.currentlyStreaming == null) {
             try {
                 Bot.boostedServer = event.getGuild();
+                Bot.prop.replace("boostedGuildId", event.getGuild().getIdLong());
                 Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -39,6 +40,7 @@ public class StreamListener extends ListenerAdapter {
         if (Bot.boostedServer == null || Bot.currentlyStreaming == null) {
             try {
                 Bot.boostedServer = event.getGuild();
+                Bot.prop.replace("boostedGuildId", event.getGuild().getIdLong());
                 Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -62,6 +64,7 @@ public class StreamListener extends ListenerAdapter {
         if (Bot.boostedServer == null || Bot.currentlyStreaming == null) {
             try {
                 Bot.boostedServer = event.getGuild();
+                Bot.prop.replace("boostedGuildId", event.getGuild().getIdLong());
                 Bot.currentlyStreaming = event.getGuild().getRolesByName("Currently Streaming", false).get(0);
             } catch (Exception e) {
                 e.printStackTrace();
