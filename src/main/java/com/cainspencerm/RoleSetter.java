@@ -29,94 +29,52 @@ public class RoleSetter extends ListenerAdapter {
     @Override
     public void onGuildMessageReactionAdd(@Nonnull GuildMessageReactionAddEvent event) {
         if (event.getUser().isBot()) return;
+        if (!event.getMessageId().equals(gameReactionMessageId)) return;
 
-        for (int i = 0; i < games.length; i++) {
-            if (event.getReactionEmote().getName().equalsIgnoreCase(games[i])) {
+        for (String game : games) {
+            if (event.getReactionEmote().getName().equalsIgnoreCase(game)) {
                 // Add role to member.
                 try {
                     Member member = event.getMember();
-                    List<Role> roleList = null;
-                    while (roleList == null || roleList.isEmpty()) {
-                        try {
-                            System.out.println("Rolelist troubleshooting.");
-                            roleList = boostedServer.getRolesByName(roles[i], true);
-                        } catch (Exception ignore) {
-                            roleList = null;
-                        }
-                    }
 
-                    Role role = roleList.get(0);
+                    System.out.println("Rolelist troubleshooting started.");
+
+                    Role role = boostedServer.getRoleById(prop.getProperty("game." + game));
                     boostedServer.addRoleToMember(member, role).queue();
-                    event.getChannel().sendMessage("Added role to " + member.getAsMention()).queue();
 
-                    String messageId = event.getChannel().getLatestMessageId();
+                    System.out.println("Rolelist troubleshooting completed.");
 
-                    boostedServer.getTextChannelsByName("game-setter", true)
-                            .get(0)
-                            .deleteMessageById(messageId)
-                            .queueAfter(1, TimeUnit.MINUTES);
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-
-        // Role not added to member.
-        event.getChannel().sendMessage("Could not add role to " + event.getUser().getAsMention() + ". Try again in a few seconds.").queue();
-
-        String messageId = event.getChannel().getLatestMessageId();
-
-        boostedServer.getTextChannelsByName("game-setter", true)
-                .get(0)
-                .deleteMessageById(messageId)
-                .queueAfter(1, TimeUnit.MINUTES);
     }
 
     @Override
     public void onGuildMessageReactionRemove(@Nonnull GuildMessageReactionRemoveEvent event) {
         if (event.getUser().isBot()) return;
+        if (!event.getMessageId().equals(gameReactionMessageId)) return;
 
-        for (int i = 0; i < games.length; i++) {
-            if (event.getReactionEmote().getName().equalsIgnoreCase(games[i])) {
+        for (String game : games) {
+            if (event.getReactionEmote().getName().equalsIgnoreCase(game)) {
                 // Remove role from member.
                 try {
                     Member member = event.getMember();
-                    List<Role> roleList = null;
-                    while (roleList == null || roleList.isEmpty()) {
-                        try {
-                            System.out.println("Rolelist troubleshooting.");
-                            roleList = boostedServer.getRolesByName(roles[i], true);
-                        } catch (Exception ignore) {
-                            roleList = null;
-                        }
-                    }
 
-                    Role role = roleList.get(0);
+                    System.out.println("Rolelist troubleshooting started.");
+
+                    Role role = boostedServer.getRoleById(prop.getProperty("game." + game));
                     boostedServer.removeRoleFromMember(member, role).queue();
-                    event.getChannel().sendMessage("Removed role from " + event.getUser().getAsMention()).queue();
 
-                    String messageId = event.getChannel().getLatestMessageId();
+                    System.out.println("Rolelist troubleshooting completed.");
 
-                    boostedServer.getTextChannelsByName("game-setter", true)
-                            .get(0)
-                            .deleteMessageById(messageId)
-                            .queueAfter(1, TimeUnit.MINUTES);
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-
-        // Role not removed from member.
-        event.getChannel().sendMessage("Could not remove role from " + event.getUser().getAsMention() + ". Try again in a few seconds.").queue();
-
-        String messageId = event.getChannel().getLatestMessageId();
-
-        boostedServer.getTextChannelsByName("game-setter", true)
-                .get(0)
-                .deleteMessageById(messageId)
-                .queueAfter(1, TimeUnit.MINUTES);
     }
 }
